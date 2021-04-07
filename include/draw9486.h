@@ -296,7 +296,7 @@ namespace DRAW9486
     }
 
     //
-    void print(const char *str, int px, int py, int color = 0xffff)
+    void print(const char *str, int px, int py, int color = 0xffff, int bg = 0)
     {
 #if DRAW_H
         px = 320 - px - 8;
@@ -329,19 +329,14 @@ namespace DRAW9486
 #endif
                 for (int x = 0; x < 8; x++)
                 {
-                    u8 h = 0, l = 0;
 #if DRAW_H
                     bool draw = hl & 1;
 #else
                     bool draw = hl & 0x80;
 #endif
-                    if (draw)
-                    {
-                        h = color >> 8;
-                        l = color;
-                    }
-                    Lcd_Write_Data(h);
-                    Lcd_Write_Data(l);
+                    uint16_t c = draw ? color : bg;
+                    Lcd_Write_Data(c >> 8);
+                    Lcd_Write_Data(c);
 #if DRAW_H
                     hl >>= 1;
 #else
