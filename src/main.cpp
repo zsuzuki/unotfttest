@@ -117,7 +117,7 @@ void loop()
 {
   if (Serial.available())
   {
-    char buff[64];
+    char buff[80];
     auto sz = Serial.readBytesUntil('\n', buff, sizeof(buff));
     switch (buff[0])
     {
